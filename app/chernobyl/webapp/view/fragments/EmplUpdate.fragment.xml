@@ -1,0 +1,151 @@
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:f="sap.ui.layout.form"
+    xmlns:core="sap.ui.core"
+>
+    <f:Form
+        id="FormEmplDetail"
+        class="sapUiContentPadding"
+    >
+        <f:title>
+            <core:Title text="Employee Information" />
+        </f:title>
+        <f:layout>
+            <f:ResponsiveGridLayout
+                labelSpanXL="4"
+                labelSpanL="4"
+                labelSpanM="4"
+                labelSpanS="12"
+                adjustLabelSpan="true"
+                emptySpanXL="0"
+                emptySpanL="0"
+                emptySpanM="0"
+                emptySpanS="0"
+                columnsXL="3"
+                columnsL="3"
+                columnsM="3"
+                singleContainerFullSize="true"
+            />
+        </f:layout>
+        <f:formContainers>
+            <f:FormContainer id="EmplCol1">
+                <f:formElements>
+                    <f:FormElement label="Name">
+                        <f:fields>
+                            <Input
+                                id="InEmpFirstName"
+                                value="{firstName}"
+                                required="true"
+                                fieldGroupIds="isRequired"
+                            />
+                            <Input
+                                id="InEmpName"
+                                value="{lastName}"
+                                required="true"
+                                fieldGroupIds="isRequired"
+                            />
+                        </f:fields>
+                    </f:FormElement>
+                    <f:FormElement label="Gender">
+                        <f:fields>
+                            <Select
+                                id="SelEmpGender"
+                                selectedKey="{path: 'gender', type: 'sap.ui.model.type.Boolean'}"
+                                required="true"
+                                fieldGroupIds="isRequired"
+                            >
+                                <items>
+                                    <core:Item
+                                        key="{= false}"
+                                        text="Male"
+                                    />
+                                    <core:Item
+                                        key="{= true}"
+                                        text="Female"
+                                    />
+                                </items>
+                            </Select>
+                        </f:fields>
+                    </f:FormElement>
+                </f:formElements>
+                <f:FormElement label="Department">
+                    <Select
+                        id="SelDept"
+                        items="{/Departments}"
+                        selectedKey="{department_ID}"
+                        required="true"
+                        fieldGroupIds="isRequired"
+                    >
+                        <items>
+                            <core:Item
+                                text="{name}"
+                                key="{ID}"
+                            />
+                        </items>
+                    </Select>
+                </f:FormElement>
+                <f:FormElement label="Level">
+                    <Select
+                        id="SelLevel"
+                        selectedKey="{role_ID}"
+                        required="true"
+                        items="{/Roles}"
+                        fieldGroupIds="isRequired"
+                    >
+                        <core:Item
+                            text="{name}"
+                            key="{ID}"
+                        />
+                    </Select>
+                </f:FormElement>
+            </f:FormContainer>
+            <f:FormContainer id="EmplCol2">
+                <f:FormElement label="">
+                    <Text />
+                </f:FormElement>
+                <f:FormElement label="Date of Birth">
+                    <DatePicker
+                        valueFormat="yyyy-MM-dd"
+                        id="DateDob"
+                        value="{dateOfBirth}"
+                        required="true"
+                        fieldGroupIds="isRequired"
+                    />
+                </f:FormElement>
+                <f:formElements>
+                    <f:FormElement label="Working From">
+                        <DatePicker
+                            id="DateHire"
+                            value="{hireDate}"
+                            required="true"
+                            fieldGroupIds="isRequired"
+                            valueFormat="yyyy-MM-dd"
+                        />
+                    </f:FormElement>
+                    <f:FormElement label="Email">
+                        <Input
+                            id="InEmail"
+                            valueStateText="E-mail must be a valid email address."
+                            value="{ path: 'email' }"
+                            fieldGroupIds="isRequired"
+                            required="true"
+                        />
+                    </f:FormElement>
+                    <f:FormElement label="Salary">
+                        <Input
+                            id="InSalary"
+                            editable="false"
+                            value="{salary}"
+                        />
+                        <Input
+                            id="InCurrency"
+                            editable="false"
+                            class="float-right fit-container"
+                            value="{currency_code}"
+                        />
+                    </f:FormElement>
+                </f:formElements>
+            </f:FormContainer>
+        </f:formContainers>
+    </f:Form>
+</core:FragmentDefinition>

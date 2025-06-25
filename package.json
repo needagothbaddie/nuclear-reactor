@@ -15,6 +15,7 @@
         "@cap-js/cds-types": "^0.10.0",
         "@cap-js/sqlite": "^1",
         "@sap/cds-dk": "^8",
+        "cds-swagger-ui-express": "^0.10.0",
         "mbt": "^1.2.29",
         "rimraf": "^5.0.5"
     },
@@ -24,7 +25,7 @@
         "undeploy": "cf undeploy ojt --delete-services --delete-service-keys --delete-service-brokers",
         "build": "rimraf resources mta_archives && mbt build --mtar archive",
         "deploy": "cf deploy mta_archives/archive.mtar --retries 1",
-        "hybrid": "npm run hybrid"
+        "hybrid": "cds watch --profile hybrid"
     },
     "cds": {
         "sql": {

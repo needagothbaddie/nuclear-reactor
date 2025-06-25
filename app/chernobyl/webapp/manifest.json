@@ -1,117 +1,124 @@
 {
-  "_version": "1.65.0",
-  "sap.app": {
-    "id": "chernobyl",
-    "type": "application",
-    "i18n": "i18n/i18n.properties",
-    "applicationVersion": {
-      "version": "0.0.1"
-    },
-    "title": "{{appTitle}}",
-    "description": "{{appDescription}}",
-    "resources": "resources.json",
-    "sourceTemplate": {
-      "id": "@sap/generator-fiori:basic",
-      "version": "1.18.0",
-      "toolsId": "3d185dd9-f57f-4722-8d46-0d273e9cf7ac"
-    },
-    "dataSources": {
-      "mainService": {
-        "uri": "/odata/v4/my/",
-        "type": "OData",
-        "settings": {
-          "annotations": [],
-          "odataVersion": "4.0"
+    "_version": "1.65.0",
+    "sap.app": {
+        "id": "chernobyl",
+        "type": "application",
+        "i18n": "i18n/i18n.properties",
+        "applicationVersion": {
+            "version": "0.0.1"
+        },
+        "title": "{{appTitle}}",
+        "description": "{{appDescription}}",
+        "resources": "resources.json",
+        "sourceTemplate": {
+            "id": "@sap/generator-fiori:basic",
+            "version": "1.18.0",
+            "toolsId": "3d185dd9-f57f-4722-8d46-0d273e9cf7ac"
+        },
+        "dataSources": {
+            "mainService": {
+                "uri": "/odata/v4/my/",
+                "type": "OData",
+                "settings": {
+                    "annotations": [],
+                    "odataVersion": "4.0"
+                }
+            }
         }
-      }
+    },
+    "sap.ui": {
+        "technology": "UI5",
+        "icons": {
+            "icon": "",
+            "favIcon": "",
+            "phone": "",
+            "phone@2": "",
+            "tablet": "",
+            "tablet@2": ""
+        },
+        "deviceTypes": {
+            "desktop": true,
+            "tablet": true,
+            "phone": true
+        }
+    },
+    "sap.ui5": {
+        "flexEnabled": false,
+        "dependencies": {
+            "minUI5Version": "1.136.2",
+            "libs": {
+                "sap.m": {},
+                "sap.ui.core": {}
+            }
+        },
+        "contentDensities": {
+            "compact": true,
+            "cozy": true
+        },
+        "models": {
+            "i18n": {
+                "type": "sap.ui.model.resource.ResourceModel",
+                "settings": {
+                    "bundleName": "chernobyl.i18n.i18n"
+                }
+            },
+            "": {
+                "dataSource": "mainService",
+                "preload": true,
+                "settings": {
+                    "operationMode": "Server",
+                    "autoExpandSelect": true,
+                    "earlyRequests": true
+                }
+            }
+        },
+        "resources": {
+            "css": [
+                {
+                    "uri": "css/style.css"
+                }
+            ]
+        },
+        "routing": {
+            "config": {
+                "routerClass": "sap.m.routing.Router",
+                "controlAggregation": "pages",
+                "controlId": "app",
+                "transition": "slide",
+                "type": "View",
+                "viewType": "XML",
+                "path": "chernobyl.view",
+                "async": true,
+                "viewPath": "chernobyl.view"
+            },
+            "routes": [
+                {
+                    "name": "EmplList",
+                    "pattern": ":?query:",
+                    "target": ["TargetList"]
+                },
+                {
+                    "name": "EmplDetail",
+                    "pattern": "employee/{id}",
+                    "target": ["TargetEmplDetail"]
+                }
+            ],
+            "targets": {
+                "TargetList": {
+                    "id": "EmplList",
+                    "name": "EmplList"
+                },
+                "TargetEmplDetail": {
+                    "id": "Employee",
+                    "name": "Employee"
+                }
+            }
+        },
+        "rootView": {
+            "viewName": "chernobyl.view.App",
+            "type": "XML",
+            "id": "App",
+            "async": true
+        }
     }
-  },
-  "sap.ui": {
-    "technology": "UI5",
-    "icons": {
-      "icon": "",
-      "favIcon": "",
-      "phone": "",
-      "phone@2": "",
-      "tablet": "",
-      "tablet@2": ""
-    },
-    "deviceTypes": {
-      "desktop": true,
-      "tablet": true,
-      "phone": true
-    }
-  },
-  "sap.ui5": {
-    "flexEnabled": true,
-    "dependencies": {
-      "minUI5Version": "1.136.2",
-      "libs": {
-        "sap.m": {},
-        "sap.ui.core": {}
-      }
-    },
-    "contentDensities": {
-      "compact": true,
-      "cozy": true
-    },
-    "models": {
-      "i18n": {
-        "type": "sap.ui.model.resource.ResourceModel",
-        "settings": {
-          "bundleName": "chernobyl.i18n.i18n"
-        }
-      },
-      "": {
-        "dataSource": "mainService",
-        "preload": true,
-        "settings": {
-          "operationMode": "Server",
-          "autoExpandSelect": true,
-          "earlyRequests": true
-        }
-      }
-    },
-    "resources": {
-      "css": [
-        {
-          "uri": "css/style.css"
-        }
-      ]
-    },
-    "routing": {
-      "config": {
-        "routerClass": "sap.m.routing.Router",
-        "controlAggregation": "pages",
-        "controlId": "app",
-        "transition": "slide",
-        "type": "View",
-        "viewType": "XML",
-        "path": "chernobyl.view",
-        "async": true,
-        "viewPath": "chernobyl.view"
-      },
-      "routes": [
-        {
-          "name": "RouteBase",
-          "pattern": ":?query:",
-          "target": [
-            "TargetBase"
-          ]
-        }
-      ],
-      "targets": {
-        "TargetBase": {
-          "id": "Base",
-          "name": "Base"
-        }
-      }
-    },
-    "rootView": {
-      "viewName": "chernobyl.view.App",
-      "type": "XML",
-      "id": "App",
-      "async": true
-    }
-  }
 }

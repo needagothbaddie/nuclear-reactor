@@ -1,1 +1,47 @@
-/* Enter your custom styles here */
+:root {
+    --rose: #ee7f7e;
+    --dark-rose: #c45858;
+}
+
+#container-chernobyl---App--Toolheader {
+    background-color: var(--rose) !important;
+}
+/* header styles */
+/* header button text color */
+[id^="container-chernobyl---App--Btn"] {
+    color: white !important;
+}
+/* header title text */
+#container-chernobyl---App--Tittle-inner {
+    color: white;
+}
+/* header button hover effect */
+span[id^="container-chernobyl---App--Btn"]:hover {
+    background-color: var(--dark-rose) !important;
+}
+
+.padding-page {
+    padding: 1rem;
+}
+
+.padding-top-dialog-content{
+    padding-top: 1rem
+}
+
+.padding-top{
+    padding-top: 1rem;
+}
+
+.float-right{
+    float: right;
+}
+
+.fit-container{
+    display: flex;
+    width: fit-content;
+}
+
+#container-chernobyl---EmployeeFormView--FormEmpl--Grid-wrapperfor-container-chernobyl---EmployeeFormView--EmplColButt--Grid{
+    display: flex;
+    width: fit-content;
+}
