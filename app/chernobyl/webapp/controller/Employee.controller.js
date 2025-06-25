@@ -3,8 +3,9 @@ sap.ui.define(
         "sap/ui/core/mvc/Controller",
         "chernobyl/utils/constants",
         "chernobyl/utils/types/EmailType",
+        "chernobul/components/BetterToast",
     ],
-    (BaseController, constants, EmailType) => {
+    (BaseController, constants, EmailType, BetterToast) => {
         "use strict";
         let router;
         let isAdmin;
@@ -22,7 +23,7 @@ sap.ui.define(
 
             onSubmitForm: function (_) {
                 let bValid = true;
-
+                // validate required fields
                 this.getView()
                     .byId("FormEmpl")
                     .getControlsByFieldGroupId("isRequired")
@@ -42,6 +43,18 @@ sap.ui.define(
                         }
                     });
                 if (!bValid) return;
+
+                // get bound context
+                const oContext = this.oAddDialog.getBindingContext();
+                const oModel = oContext.getModel();
+                // create
+                oModel
+                    .submitBatch("createGroup")
+                    .then()
+                    .catch(function (err) {
+                        this.oAddDialog.close();
+                        BetterToast.error(err.message);
+                    });
             },
             _validateInput: function (oInput) {
                 var sValueState = "None";

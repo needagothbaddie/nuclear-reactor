@@ -5,25 +5,21 @@
 >
     <f:Form
         id="FormEmplDetail"
-        class="sapUiContentPadding"
+        class="sapUiTinyMargin"
     >
         <f:title>
             <core:Title text="Employee Information" />
         </f:title>
         <f:layout>
             <f:ResponsiveGridLayout
-                labelSpanXL="4"
-                labelSpanL="4"
-                labelSpanM="4"
-                labelSpanS="12"
                 adjustLabelSpan="true"
+                columnsXL="2"
+                columnsL="2"
+                columnsM="1"
                 emptySpanXL="0"
                 emptySpanL="0"
                 emptySpanM="0"
                 emptySpanS="0"
-                columnsXL="3"
-                columnsL="3"
-                columnsM="3"
                 singleContainerFullSize="true"
             />
         </f:layout>
@@ -53,6 +49,7 @@
                                 selectedKey="{path: 'gender', type: 'sap.ui.model.type.Boolean'}"
                                 required="true"
                                 fieldGroupIds="isRequired"
+                                forceSelection="false"
                             >
                                 <items>
                                     <core:Item
@@ -75,6 +72,7 @@
                         selectedKey="{department_ID}"
                         required="true"
                         fieldGroupIds="isRequired"
+                        forceSelection="false"
                     >
                         <items>
                             <core:Item
@@ -91,6 +89,7 @@
                         required="true"
                         items="{/Roles}"
                         fieldGroupIds="isRequired"
+                        forceSelection="false"
                     >
                         <core:Item
                             text="{name}"
@@ -100,9 +99,6 @@
                 </f:FormElement>
             </f:FormContainer>
             <f:FormContainer id="EmplCol2">
-                <f:FormElement label="">
-                    <Text />
-                </f:FormElement>
                 <f:FormElement label="Date of Birth">
                     <DatePicker
                         valueFormat="yyyy-MM-dd"
@@ -136,13 +132,27 @@
                             id="InSalary"
                             editable="false"
                             value="{salary}"
-                        />
+                        >
+                            <layoutData>
+                                <f:ColumnElementData
+                                    cellsLarge="12"
+                                    cellsSmall="3"
+                                />
+                            </layoutData>
+                        </Input>
                         <Input
                             id="InCurrency"
                             editable="false"
                             class="float-right fit-container"
                             value="{currency_code}"
-                        />
+                        >
+                            <!-- <layoutData>
+                                <f:ColumnElementData
+                                    cellsLarge="3"
+                                    cellsSmall="3"
+                                />
+                            </layoutData> -->
+                        </Input>
                     </f:FormElement>
                 </f:formElements>
             </f:FormContainer>

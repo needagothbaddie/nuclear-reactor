@@ -1,6 +1,10 @@
 sap.ui.define(
-    ["sap/ui/core/mvc/Controller", "chernobyl/utils/constants"],
-    (Controller, constants) => {
+    [
+        "sap/ui/core/mvc/Controller",
+        "chernobyl/utils/constants",
+        "chernobyl/components/BetterToast",
+    ],
+    (Controller, constants, BetterToast) => {
         "use strict";
         let router;
         return Controller.extend("chernobyl.controller.EmplList", {
@@ -13,6 +17,80 @@ sap.ui.define(
                     .getBindingContext()
                     .getObject();
                 router.navTo(constants.EMPLOYEE_INFO, { id: rowData.ID });
+            },
+            onAddEmpl: async function (e) {
+                if (!this.oAddDialog) {
+                    this.oAddDialog = await this.loadFragment({
+                        name: "chernobyl.view.fragments.EmplCreate",
+                        horizontalScrolling: false,
+                        stretch: true,
+                    });
+                }
+                // Create a transient (unsaved) entity
+                const oView = this.getView();
+                const oModel = oView.getModel();
+                // Get the list binding for the Employees entity set
+                const oListBinding = oModel.bindList(
+                    "/Employees",
+                    undefined,
+                    undefined,
+                    undefined,
+                    {
+                        $$updateGroupId: "createGroup",
+                    }
+                );
+                const oContext = oListBinding.create({}, true);
+                oListBinding.attachCreateCompleted((res) => {
+                    const isSuccess = res.getParameter("success");
+                    if (isSuccess) {
+                        oView.byId("EmplTable").getBinding("rows").refresh();
+                        BetterToast.success("Create successfully!");
+                    } else {
+                        // this.oAddDialog.close();
+                        BetterToast.error("Cannot create new Employee");
+                    }
+                    this.oAddDialog.close();
+                });
+
+                await this.oAddDialog;
+                this.oAddDialog.setBindingContext(oContext);
+                this.oAddDialog.open();
+            },
+            onBtnEmplCreate(_) {
+                // get bound context
+                const oContext = this.oAddDialog.getBindingContext();
+                const oModel = oContext.getModel();
+                // create
+                oModel
+                    .submitBatch("createGroup")
+                    .then()
+                    .catch(function (err) {
+                        this.oAddDialog.close();
+                        BetterToast.error(err.message);
+                    });
+            },
+            onOnboardEmpl() {
+                BetterToast.success("nhu cc");
+            },
+            onDeleteEmpl(e) {
+                // get bound context
+                const oContext = e.getParameter("row").getBindingContext();
+                const oModel = oContext.getModel();
+                // delete
+                oContext.delete();
+                oModel
+                    .submitBatch(oModel.getUpdateGroupId())
+                    .then()
+                    .catch((err) => {
+                        BetterToast.error(err.message);
+                    });
+                this.oAddDialog.close();
+                // check if record is deleted
+                oContext.isDeleted() &&
+                    BetterToast.success("Delete Successfully");
+            },
+            onBtnClose() {
+                this.oAddDialog.close();
             },
         });
     }

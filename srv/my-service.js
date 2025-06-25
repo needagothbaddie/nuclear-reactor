@@ -15,18 +15,17 @@ class MyService extends cds.ApplicationService {
             await this.calculateSalary(req.id);
         });
         // overwrite delete
-        this.on("DELETE", "Employees", this.deleteEmpl);
+        // this.on("DELETE", "Employees", this.deleteEmpl);
 
         return super.init();
     }
     async setBaseSalary(req) {
         const baseSalary = await SELECT.one
             .from("Roles")
-            .where({ ID: id })
+            .where({ ID: req.data.role_ID })
             .columns((r) => {
                 r.baseSalary;
             });
-
         req.data.baseSalary = baseSalary;
     }
     async calculateSalary(id) {
