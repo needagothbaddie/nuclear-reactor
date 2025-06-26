@@ -10,6 +10,12 @@ sap.ui.define(
             onNavHome(_) {
                 router.navTo(constants.EMPLOYEE_LIST);
             },
+            onNavRole(_) {
+                router.navTo(constants.ROLE_LIST);
+            },
+            onNavDept() {
+                router.navTo(constants.DEPT_LIST);
+            },
         });
     }
 );

@@ -10,7 +10,7 @@ entity Employees : cuid {
     firstName   : String;
     lastName    : String;
     gender      : Gender not null;
-    hireDate    : Date default '1900-01-01';
+    hireDate    : Date default '1900-01-01' not null;
     department  : Association to Departments;
     companyCode : String(4);
     dateOfBirth : Date default '1900-01-01' not null;

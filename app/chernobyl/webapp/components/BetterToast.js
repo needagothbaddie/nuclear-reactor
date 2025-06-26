@@ -1,6 +1,5 @@
 sap.ui.define(["sap/m/MessageToast"], function (MessageToast) {
     "use strict";
-    // showSuccess
     MessageToast.success = function (text) {
         this.show(text);
         $(".sapMMessageToast").addClass("betterToastSucc iconAdded");

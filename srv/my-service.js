@@ -7,13 +7,13 @@ class MyService extends cds.ApplicationService {
         this.on("calSalary", this.calculateSalary);
         // set base salary
         this.before("CREATE", "Employees", this.setBaseSalary);
-        // check & update salary if there is changed in role
-        this.before("UPDATE", "Employees", async (req) => {
-            console.log(req);
-        });
-        this.after("UPDATE", "Employees", async (req) => {
-            await this.calculateSalary(req.id);
-        });
+        // // check & update salary if there is changed in role
+        // this.before("UPDATE", "Employees", async (req) => {
+        //     console.log(req);
+        // });
+        // this.after("UPDATE", "Employees", async (req) => {
+        //     await this.calculateSalary(req.id);
+        // });
         // overwrite delete
         // this.on("DELETE", "Employees", this.deleteEmpl);
 
@@ -28,32 +28,34 @@ class MyService extends cds.ApplicationService {
             });
         req.data.baseSalary = baseSalary;
     }
-    async calculateSalary(id) {
-        const baseSal = await SELECT.one
+    async calculateSalary(req) {
+        const empl = await SELECT.one
+            .from("Employees")
+            .where({ ID: req.data.id })
+            .columns((e) => {
+                e.hireDate, e.salary, e.role_ID;
+            });
+
+        const role = await SELECT.one
             .from("Roles")
-            .where({ ID: id })
+            .where({ ID: empl.role_ID })
             .columns((r) => {
                 r.baseSalary;
             });
-        const empl = await SELECT.one
-            .from("Employees")
-            .where({ ID: id })
-            .columns((e) => {
-                e.hireDate, e.salary, e.role;
-            });
-
+        // calculate working years
         const now = moment();
         const hireDate = moment(empl.hireDate);
-        const years = now.subtract(hireDate, "years");
+        const years = now.diff(hireDate, "years");
 
-        const salary = baseSal + 1000 * years;
-        await UPDATE("Employees").where({ ID: id }).with({ salary });
+        const salary = role.baseSalary + 1000 * years;
+
+        await UPDATE("Employees").where({ ID: req.data.id }).set({ salary });
         return salary;
     }
     async deleteEmpl(req) {
-        await UPDATE("Employees")
-            .where({ ID: req.data.id })
-            .with({ isDelete: true });
+        // await UPDATE("Employees")
+        //     .where({ ID: req.data.id })
+        //     .set({ isDelete: true });
     }
 }
 

@@ -51,14 +51,6 @@ span[id^="container-chernobyl---App--Btn"]:hover {
 }
 
 .betterToastErr {
-    /* display: flex; */
-    /* align-items: center; */
-    /* padding: 1rem 1.2rem;
-    border-radius: 8px;
-    /* color: #fff; */
-    /* font-weight: 500; */
-    /* box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); */
-    /* max-width: 500px; */
     font-size: 1rem;
     gap: 0.75rem;
     background: var(--error-bg);

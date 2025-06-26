@@ -101,6 +101,16 @@
                     "name": "EmplDetail",
                     "pattern": "employee/{id}",
                     "target": ["TargetEmplDetail"]
+                },
+                {
+                    "name": "DeptList",
+                    "pattern": "departments",
+                    "target": ["TargetDeptList"]
+                },
+                {
+                    "name": "RoleList",
+                    "pattern": "roles",
+                    "target": ["TargetRoleList"]
                 }
             ],
             "targets": {
@@ -111,6 +121,14 @@
                 "TargetEmplDetail": {
                     "id": "Employee",
                     "name": "Employee"
+                },
+                "TargetDeptList": {
+                    "id": "DeptList",
+                    "name": "DeptList"
+                },
+                "TargetRoleList": {
+                    "id": "RoleList",
+                    "name": "RoleList"
                 }
             }
         },

@@ -5,5 +5,7 @@ sap.ui.define([], function () {
         EMPLOYEE_FORM: "EmplCreate",
         EMPLOYEE_LIST: "EmplList",
         EMPLOYEE_INFO: "EmplDetail",
+        DEPT_LIST: "DeptList",
+        ROLE_LIST: "RoleList",
     };
 });

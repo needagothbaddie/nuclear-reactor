@@ -3,7 +3,7 @@
     xmlns:f="sap.ui.layout.form"
     xmlns:core="sap.ui.core"
 >
-    <f:Form
+    <!-- <f:Form
         id="FormEmplDetail"
         class="sapUiTinyMargin"
     >
@@ -142,19 +142,14 @@
                         </Input>
                         <Input
                             id="InCurrency"
+                            editable="false"
                             class="float-right fit-container"
                             value="{currency_code}"
                         >
-                            <!-- <layoutData>
-                                <f:ColumnElementData
-                                    cellsLarge="3"
-                                    cellsSmall="3"
-                                />
-                            </layoutData> -->
                         </Input>
                     </f:FormElement>
                 </f:formElements>
             </f:FormContainer>
         </f:formContainers>
-    </f:Form>
+    </f:Form> -->
 </core:FragmentDefinition>

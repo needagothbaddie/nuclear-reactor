@@ -28,13 +28,13 @@
                 <Button
                     id="BtnRole"
                     text="Roles"
-                    press="onNavHome"
+                    press="onNavRole"
                     icon="sap-icon://role"
                 />
                 <Button
                     id="BtnDept"
                     text="Department"
-                    press="onNavHome"
+                    press="onNavDept"
                     icon="sap-icon://building"
                 />
             </tnt:ToolHeader>

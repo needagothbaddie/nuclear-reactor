@@ -9,7 +9,8 @@
         "@cap-js/hana": "^1",
         "@sap/cds": "^8",
         "express": "^4",
-        "moment": "^2.30.1"
+        "moment": "^2.30.1",
+        "@sap/xssec": "^4"
     },
     "devDependencies": {
         "@cap-js/cds-types": "^0.10.0",
@@ -25,11 +26,17 @@
         "undeploy": "cf undeploy ojt --delete-services --delete-service-keys --delete-service-brokers",
         "build": "rimraf resources mta_archives && mbt build --mtar archive",
         "deploy": "cf deploy mta_archives/archive.mtar --retries 1",
-        "hybrid": "cds watch --profile hybrid"
+        "hybrid": "cds watch --profile hybrid",
+        "approuter": "cds bind --exec -- npm start --prefix app/router"
     },
     "cds": {
         "sql": {
             "native_hana_associations": false
+        },
+        "requires": {
+            "[hybrid]": {
+                "auth": "dummy"
+            }
         }
     }
 }

@@ -18,17 +18,19 @@
             <OverflowToolbar>
                 <ToolbarSpacer />
                 <Button
-                    id="BtnCalSal"
-                    text="Calculate Salary"
-                    press="onCalculateSalary"
-                    visible="{= ${/mode} === 'I'}"
-                />
-                <Button
                     id="BtnCreateEmpl"
                     text="Save"
+                    icon="sap-icon://save"
                     press="onSubmitForm"
                     visible="{= ${/mode} === 'I'}"
                     type="Emphasized"
+                />
+                <Button
+                    id="BtnCalSal"
+                    icon="sap-icon://money-bills"
+                    text="Calculate Salary"
+                    press="onCalculateSalary"
+                    visible="{= ${/mode} === 'I'}"
                 />
             </OverflowToolbar>
         </footer>

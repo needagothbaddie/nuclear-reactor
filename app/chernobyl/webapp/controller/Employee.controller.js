@@ -3,15 +3,14 @@ sap.ui.define(
         "sap/ui/core/mvc/Controller",
         "chernobyl/utils/constants",
         "chernobyl/utils/types/EmailType",
-        "chernobul/components/BetterToast",
+        "chernobyl/components/BetterToast",
     ],
     (BaseController, constants, EmailType, BetterToast) => {
         "use strict";
         let router;
-        let isAdmin;
+        let id;
         return BaseController.extend("chernobyl.controller.Employee", {
             onInit() {
-                isAdmin = true;
                 // config routes
                 router = this.getOwnerComponent().getRouter();
                 // set handler for Detail page
@@ -25,7 +24,7 @@ sap.ui.define(
                 let bValid = true;
                 // validate required fields
                 this.getView()
-                    .byId("FormEmpl")
+                    .byId("FormEmplDetail")
                     .getControlsByFieldGroupId("isRequired")
                     .forEach(function (oControl) {
                         if (oControl.getRequired && oControl.getRequired()) {
@@ -45,14 +44,34 @@ sap.ui.define(
                 if (!bValid) return;
 
                 // get bound context
-                const oContext = this.oAddDialog.getBindingContext();
-                const oModel = oContext.getModel();
-                // create
+                const oModel = this.getView().getModel();
                 oModel
-                    .submitBatch("createGroup")
-                    .then()
+                    .submitBatch("updateGroup")
+                    .then(() => {
+                        BetterToast.success("Update Successfully");
+                    })
                     .catch(function (err) {
-                        this.oAddDialog.close();
+                        BetterToast.error(err.message);
+                    });
+            },
+            onCalculateSalary(e) {
+                // bind action
+                const model = this.getView().getModel();
+                let oAction = this.getView()
+                    .getModel()
+                    .bindContext("/calSalary(...)");
+                // set action parameter
+                oAction.setParameter("id", id);
+
+                oAction
+                    .invoke()
+                    .then(() => {
+                        model.refresh();
+                        BetterToast.success(
+                            "Employee's Salary has been recalculated"
+                        );
+                    })
+                    .catch((err) => {
                         BetterToast.error(err.message);
                     });
             },
@@ -72,13 +91,26 @@ sap.ui.define(
                 return bValidationError;
             },
             _renderDetail: async function name(e) {
-                const id = e.getParameter("arguments").id;
+                id = e.getParameter("arguments").id;
                 const form = this.getView().byId("FormEmplDetail");
 
-                form.setEditable(false);
-                form.bindElement({
-                    path: `/Employees('${id}')`,
-                });
+                const oContext = form
+                    .bindElement({
+                        path: `/Employees('${id}')`,
+                        parameters: {
+                            $$updateGroupId: "updateGroup",
+                        },
+                    })
+                    .getModel();
+                console.log(oContext);
+                // handler after complete update data
+                // oContext.attachPatchCompleted((res) => {
+                //     // check if it is success
+                //     const isSuccess = res.getParameter("success");
+                //     isSuccess
+                //         ? BetterToast.success("Update successfully!")
+                //         : BetterToast.error("Cannot update Employee");
+                // });
             },
             EmailType,
         });

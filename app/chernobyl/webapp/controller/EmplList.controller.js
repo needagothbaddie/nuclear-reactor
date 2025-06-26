@@ -40,13 +40,14 @@ sap.ui.define(
                     }
                 );
                 const oContext = oListBinding.create({}, true);
+                // handler after complete create data
                 oListBinding.attachCreateCompleted((res) => {
+                    // check if it is success
                     const isSuccess = res.getParameter("success");
                     if (isSuccess) {
                         oView.byId("EmplTable").getBinding("rows").refresh();
                         BetterToast.success("Create successfully!");
                     } else {
-                        // this.oAddDialog.close();
                         BetterToast.error("Cannot create new Employee");
                     }
                     this.oAddDialog.close();
@@ -84,7 +85,6 @@ sap.ui.define(
                     .catch((err) => {
                         BetterToast.error(err.message);
                     });
-                this.oAddDialog.close();
                 // check if record is deleted
                 oContext.isDeleted() &&
                     BetterToast.success("Delete Successfully");
