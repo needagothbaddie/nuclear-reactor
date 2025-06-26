@@ -19,11 +19,11 @@ sap.ui.define(
                 // enable routing
                 this.getRouter().initialize();
 
-                // try {
-                //     jQuery.sap.require(
-                //         "sap.ushell.cpv2.services.cloudServices.SiteService"
-                //     );
-                // } catch (oException) {}
+                try {
+                    jQuery.sap.require(
+                        "sap.ushell.cpv2.services.cloudServices.SiteService"
+                    );
+                } catch (oException) {}
             },
         });
     }

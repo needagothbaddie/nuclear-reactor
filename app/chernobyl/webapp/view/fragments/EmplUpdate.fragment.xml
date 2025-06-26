@@ -33,12 +33,14 @@
                                 value="{firstName}"
                                 required="true"
                                 fieldGroupIds="isRequired"
+                                placeholder="First Name"
                             />
                             <Input
                                 id="InEmpName"
                                 value="{lastName}"
                                 required="true"
                                 fieldGroupIds="isRequired"
+                                placeholder="Last Name"
                             />
                         </f:fields>
                     </f:FormElement>
@@ -132,6 +134,7 @@
                             id="InSalary"
                             editable="false"
                             value="{salary}"
+                            placeholder="Salary"
                         >
                             <layoutData>
                                 <f:ColumnElementData
@@ -144,13 +147,16 @@
                             id="InCurrency"
                             class="float-right fit-container"
                             value="{currency_code}"
+                            placeholder="Currency"
+                            showSuggestion="true"
+                            suggestionItems="{/Currencies}"
                         >
-                            <!-- <layoutData>
-                                <f:ColumnElementData
-                                    cellsLarge="3"
-                                    cellsSmall="3"
+                            <suggestionItems>
+                                <core:ListItem
+                                    text="{code}"
+                                    additionalText="{name}"
                                 />
-                            </layoutData> -->
+                            </suggestionItems>
                         </Input>
                     </f:FormElement>
                 </f:formElements>

@@ -7,17 +7,19 @@ class MyService extends cds.ApplicationService {
         this.on("calSalary", this.calculateSalary);
         // set base salary
         this.before("CREATE", "Employees", this.setBaseSalary);
-        // // check & update salary if there is changed in role
-        // this.before("UPDATE", "Employees", async (req) => {
-        //     console.log(req);
-        // });
-        // this.after("UPDATE", "Employees", async (req) => {
-        //     await this.calculateSalary(req.id);
-        // });
+        // get current user
+        this.on("whoami", this.whoami);
         // overwrite delete
         // this.on("DELETE", "Employees", this.deleteEmpl);
 
         return super.init();
+    }
+    whoami(req) {
+        return {
+            username: req.user.username,
+            token: req.user?.tokenInfo?.jwt,
+            roles: req.user.roles,
+        };
     }
     async setBaseSalary(req) {
         const baseSalary = await SELECT.one
@@ -35,7 +37,6 @@ class MyService extends cds.ApplicationService {
             .columns((e) => {
                 e.hireDate, e.salary, e.role_ID;
             });
-
         const role = await SELECT.one
             .from("Roles")
             .where({ ID: empl.role_ID })
