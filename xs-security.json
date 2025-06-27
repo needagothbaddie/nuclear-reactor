@@ -1,7 +1,34 @@
 {
-  "xsappname": "ojt",
-  "tenant-mode": "dedicated",
-  "description": "Security profile of called application",
-  "scopes": [],
-  "role-templates": []
+    "xsappname": "LetMeIn",
+    "tenant-mode": "dedicated",
+    "oauth2-configuration": {
+        "redirect-uris": [
+            "http://localhost:5000/login/callback",
+            "https://*.applicationstudio.cloud.sap/**"
+        ]
+    },
+    "description": "Security profile of called application",
+    "scopes": [
+        {
+            "name": "$XSAPPNAME.ViewerOJT",
+            "description": "Viewer"
+        },
+        {
+            "name": "$XSAPPNAME.AdminOJT",
+            "description": "Admin"
+        }
+    ],
+    "role-templates": [
+        {
+            "name": "AdminOJT",
+            "description": "ojt generated",
+            "scope-references": ["$XSAPPNAME.AdminOJT"]
+        },
+        {
+            "name": "ViewerOJT",
+            "description": "ojt generated",
+            "scope-references": ["$XSAPPNAME.ViewerOJT"]
+        }
+    ],
+    "attributes": []
 }
