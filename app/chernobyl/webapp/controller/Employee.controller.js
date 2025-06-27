@@ -18,6 +18,7 @@ sap.ui.define(
                     .getRoute(constants.EMPLOYEE_INFO)
                     .attachPatternMatched(this._renderDetail, this);
                 router.initialize();
+                console.log(this.getView().getModel());
             },
 
             onSubmitForm: function (_) {
@@ -93,24 +94,21 @@ sap.ui.define(
             _renderDetail: async function name(e) {
                 id = e.getParameter("arguments").id;
                 const form = this.getView().byId("FormEmplDetail");
-
                 const oContext = form
                     .bindElement({
                         path: `/Employees('${id}')`,
                         parameters: {
                             $$updateGroupId: "updateGroup",
                         },
+                        events: {
+                            dataReceived: async (e) => {
+                                const params = e.getParameters();
+                                params.error &&
+                                    router.getTargets().display("Target404");
+                            },
+                        },
                     })
                     .getModel();
-                console.log(oContext);
-                // handler after complete update data
-                // oContext.attachPatchCompleted((res) => {
-                //     // check if it is success
-                //     const isSuccess = res.getParameter("success");
-                //     isSuccess
-                //         ? BetterToast.success("Update successfully!")
-                //         : BetterToast.error("Cannot update Employee");
-                // });
             },
             EmailType,
         });

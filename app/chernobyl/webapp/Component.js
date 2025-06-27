@@ -9,7 +9,7 @@ sap.ui.define(
                 interfaces: ["sap.ui.core.IAsyncContentCreation"],
             },
 
-            init() {
+            async init() {
                 // call the base component's init function
                 UIComponent.prototype.init.apply(this, arguments);
 
@@ -18,12 +18,17 @@ sap.ui.define(
 
                 // enable routing
                 this.getRouter().initialize();
-
+                // enable xsuaa
                 try {
                     jQuery.sap.require(
                         "sap.ushell.cpv2.services.cloudServices.SiteService"
                     );
-                } catch (oException) {}
+                } catch (oException) {
+                    console.log(oException);
+                }
+
+                const userModel = await models.createUserModel();
+                this.setModel(userModel, "user");
             },
         });
     }

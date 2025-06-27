@@ -94,7 +94,7 @@
             "routes": [
                 {
                     "name": "EmplList",
-                    "pattern": ":?query:",
+                    "pattern": "",
                     "target": ["TargetList"]
                 },
                 {
@@ -111,6 +111,11 @@
                     "name": "RoleList",
                     "pattern": "roles",
                     "target": ["TargetRoleList"]
+                },
+                {
+                    "pattern": ":all*:",
+                    "name": "NotFound",
+                    "target": "Target404"
                 }
             ],
             "targets": {
@@ -129,6 +134,10 @@
                 "TargetRoleList": {
                     "id": "RoleList",
                     "name": "RoleList"
+                },
+                "Target404": {
+                    "id": "404",
+                    "name": "404"
                 }
             }
         },

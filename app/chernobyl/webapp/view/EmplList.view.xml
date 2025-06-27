@@ -40,13 +40,15 @@
                             icon="sap-icon://add-employee"
                             type="Neutral"
                             press="onAddEmpl"
+                            visible="{user>/isAdmin}"
                         />
-                        <Button
+                        <!-- <Button
                             text="Onboard Employees"
                             icon="sap-icon://company-view"
                             type="Transparent"
                             press="onOnboardEmpl"
-                        />
+                            visible="{user>/isAdmin}"
+                        /> -->
                     </OverflowToolbar>
                 </table:extension>
                 <table:columns>
@@ -95,6 +97,7 @@
                                 type="Custom"
                                 text="Delete Employee"
                                 icon="sap-icon://delete"
+                                visible="{user>/isAdmin}"
                             />
                         </table:items>
                     </table:RowAction>

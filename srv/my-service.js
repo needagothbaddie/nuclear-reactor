@@ -8,15 +8,16 @@ class MyService extends cds.ApplicationService {
         // set base salary
         this.before("CREATE", "Employees", this.setBaseSalary);
         // get current user
-        this.on("whoami", this.whoami);
+        this.on("whoami", this.whoisme);
         // overwrite delete
         // this.on("DELETE", "Employees", this.deleteEmpl);
 
         return super.init();
     }
-    whoami(req) {
+    whoisme(req) {
+        console.log(req.user);
         return {
-            username: req.user.username,
+            username: req.user.id,
             token: req.user?.tokenInfo?.jwt,
             roles: req.user.roles,
         };

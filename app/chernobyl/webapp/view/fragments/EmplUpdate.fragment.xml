@@ -34,6 +34,7 @@
                                 required="true"
                                 fieldGroupIds="isRequired"
                                 placeholder="First Name"
+                                editable="{user>/isAdmin}"
                             />
                             <Input
                                 id="InEmpName"
@@ -41,6 +42,7 @@
                                 required="true"
                                 fieldGroupIds="isRequired"
                                 placeholder="Last Name"
+                                editable="{user>/isAdmin}"
                             />
                         </f:fields>
                     </f:FormElement>
@@ -52,6 +54,7 @@
                                 required="true"
                                 fieldGroupIds="isRequired"
                                 forceSelection="false"
+                                editable="{user>/isAdmin}"
                             >
                                 <items>
                                     <core:Item
@@ -75,6 +78,7 @@
                         required="true"
                         fieldGroupIds="isRequired"
                         forceSelection="false"
+                        editable="{user>/isAdmin}"
                     >
                         <items>
                             <core:Item
@@ -92,6 +96,7 @@
                         items="{/Roles}"
                         fieldGroupIds="isRequired"
                         forceSelection="false"
+                        editable="{user>/isAdmin}"
                     >
                         <core:Item
                             text="{name}"
@@ -108,6 +113,7 @@
                         value="{dateOfBirth}"
                         required="true"
                         fieldGroupIds="isRequired"
+                        editable="{user>/isAdmin}"
                     />
                 </f:FormElement>
                 <f:formElements>
@@ -118,6 +124,7 @@
                             required="true"
                             fieldGroupIds="isRequired"
                             valueFormat="yyyy-MM-dd"
+                            editable="{user>/isAdmin}"
                         />
                     </f:FormElement>
                     <f:FormElement label="Email">
@@ -127,6 +134,7 @@
                             value="{ path: 'email' }"
                             fieldGroupIds="isRequired"
                             required="true"
+                            editable="{user>/isAdmin}"
                         />
                     </f:FormElement>
                     <f:FormElement label="Salary">
@@ -135,6 +143,9 @@
                             editable="false"
                             value="{salary}"
                             placeholder="Salary"
+                            valueState="Information"
+                            tooltip="Salary will be calculated instead of being entered manually."
+                            valueStateText="Salary will be calculated instead of being entered manually."
                         >
                             <layoutData>
                                 <f:ColumnElementData
@@ -150,6 +161,7 @@
                             placeholder="Currency"
                             showSuggestion="true"
                             suggestionItems="{/Currencies}"
+                            editable="{user>/isAdmin}"
                         >
                             <suggestionItems>
                                 <core:ListItem
