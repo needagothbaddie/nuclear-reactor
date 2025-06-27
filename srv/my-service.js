@@ -6,40 +6,58 @@ class MyService extends cds.ApplicationService {
         // cal salary action
         this.on("calSalary", this.calculateSalary);
         // set base salary
-        this.before("CREATE", async (req) => {
-            const baseSalary = await SELECT.one
-                .from("Roles")
-                .where({ ID: id })
-                .columns((r) => {
-                    r.baseSalary;
-                });
-
-            req.data.baseSalary = baseSalary;
-        });
+        this.before("CREATE", "Employees", this.setBaseSalary);
+        // get current user
+        this.on("whoami", this.whoisme);
+        // overwrite delete
+        // this.on("DELETE", "Employees", this.deleteEmpl);
 
         return super.init();
     }
-    async calculateSalary(id) {
-        const baseSal = await SELECT.one
+    whoisme(req) {
+        console.log(req.user);
+        return {
+            username: req.user.id,
+            token: req.user?.tokenInfo?.jwt,
+            roles: req.user.roles,
+        };
+    }
+    async setBaseSalary(req) {
+        const baseSalary = await SELECT.one
             .from("Roles")
-            .where({ ID: id })
+            .where({ ID: req.data.role_ID })
             .columns((r) => {
                 r.baseSalary;
             });
+        req.data.baseSalary = baseSalary;
+    }
+    async calculateSalary(req) {
         const empl = await SELECT.one
             .from("Employees")
-            .where({ ID: id })
+            .where({ ID: req.data.id })
             .columns((e) => {
-                e.hireDate, e.salary, e.role;
+                e.hireDate, e.salary, e.role_ID;
             });
-
+        const role = await SELECT.one
+            .from("Roles")
+            .where({ ID: empl.role_ID })
+            .columns((r) => {
+                r.baseSalary;
+            });
+        // calculate working years
         const now = moment();
         const hireDate = moment(empl.hireDate);
-        const years = now.subtract(hireDate, "years");
+        const years = now.diff(hireDate, "years");
 
-        const salary = baseSal + 1000 * years;
-        await UPDATE("Employees").where({ ID: id }).with({ salary });
+        const salary = role.baseSalary + 1000 * years;
+
+        await UPDATE("Employees").where({ ID: req.data.id }).set({ salary });
         return salary;
+    }
+    async deleteEmpl(req) {
+        // await UPDATE("Employees")
+        //     .where({ ID: req.data.id })
+        //     .set({ isDelete: true });
     }
 }
 
